@@ -279,7 +279,7 @@ class DroneSimulatorServer:
                 logger.debug(f"Sending ping to {connection_id}")
                 try:
                     pong_waiter = await websocket.ping()
-                    await asyncio.wait_for(pong_waiter, timeout=10)
+                    await asyncio.wait_for(pong_waiter, timeout=5)  # Changed from 10 to 5 seconds
                     logger.debug(f"Received pong from {connection_id}")
                 except (asyncio.TimeoutError, websockets.exceptions.ConnectionClosed):
                     logger.warning(f"Ping timeout for {connection_id}, closing connection")
@@ -290,7 +290,7 @@ class DroneSimulatorServer:
                         pass
                     break
                 
-                # Check for inactivity
+                # Check for inactivity more frequently
                 if connection_id in self.last_activity:
                     current_time = time.time()
                     last_active = self.last_activity.get(connection_id, 0)
@@ -298,7 +298,7 @@ class DroneSimulatorServer:
                     
                     logger.debug(f"Client {connection_id} inactive for {inactivity_duration:.1f}s")
                     
-                    if inactivity_duration > 120:  # 2 minutes inactivity timeout
+                    if inactivity_duration > 5:  # Changed from 120 to 5 seconds inactivity timeout
                         logger.warning(f"Client {connection_id} inactive for {inactivity_duration:.1f}s, closing connection")
                         try:
                             await websocket.send(json.dumps({
@@ -310,8 +310,8 @@ class DroneSimulatorServer:
                             pass
                         break
                 
-                # Wait before next ping
-                await asyncio.sleep(30)  # Send ping every 30 seconds
+                # Wait before next ping - check more frequently
+                await asyncio.sleep(5)  # Changed from 30 to 5 seconds
                 
         except asyncio.CancelledError:
             logger.debug(f"Heartbeat task cancelled for {connection_id}")
@@ -327,8 +327,8 @@ class DroneSimulatorServer:
             self.handle_connection, 
             self.host, 
             self.port,
-            ping_interval=30,  # Send ping every 30 seconds
-            ping_timeout=10,    # Wait 10 seconds for pong response
+            ping_interval=5,  # Changed from 30 to 5 seconds
+            ping_timeout=5,   # Changed from 10 to 5 seconds
             max_size=10_485_760  # 10MB max message size (default is 1MB)
         )
         
