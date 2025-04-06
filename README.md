@@ -9,7 +9,6 @@ A WebSocket-based drone simulator that provides real-time telemetry data and sim
 - Environmental condition simulation (wind, dust, sensor status)
 - WebSocket server for remote control and monitoring
 - Telemetry persistence between sessions
-- Admin dashboard for monitoring all drone connections
 - Crash detection with detailed reporting
 - Comprehensive logging system with configurable outputs
 - Command-line tools for log analysis and system monitoring
@@ -30,17 +29,9 @@ drone_simulator/
 ├── server.py           # WebSocket server implementation
 ├── telemetry.py        # Telemetry data management
 └── validators.py       # Input validation utilities
-examples/
-├── simple_client.py    # Example client implementation
-logs/                   # Directory for log files
-├── .gitignore          # Git ignore file for logs
-├── client.log          # Client activity logs
-├── drone.log           # Drone simulation logs
-├── server.log          # Server activity logs
-└── ...
-tests/
+your_name/
 ├── __init__.py
-└── test_drone.py       # Tests for drone simulator
+└── your_code.py       # Your work for drone simulator
 tools/
 └── log_viewer.py       # Utility for viewing and filtering logs
 ```
@@ -76,14 +67,9 @@ The server will start on `ws://localhost:8765` by default.
 
 You can connect to the simulator using:
 
-1. The included client:
+1. The included client. Run this in a new terminal:
 ```bash
 python drone_simulator/client.py
-```
-
-2. Visualization client:
-```bash
-python examples/droneviz.py
 ```
 
 ## Admin Dashboard
@@ -189,5 +175,15 @@ The drone will crash under the following conditions:
 
 ### Judging Criteria
 
-- Number of Iteration and Distance Covered in a single flight. The higher the better.
+- Number of Iteration and Distance Covered in a single flight without crashing. The higher the better.
+
+## Your Work
+
+- Create a folder named `your_name` eg: `rohan_das`.
+- Inside the folder add your script to simulate the drone.
+- You should read the drone output, parse it and send the instructions.
+- Your aim is to keep the drone in flight without crashing and traverse the longest distance.
+- You are allowed to make changes only to the `your_name` folder.
+- You can use anything and everything.
+- Best of luck. [PS: Tears contain salt and might short-circuit your computer.]
 
